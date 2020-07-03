@@ -29,7 +29,7 @@ app.post("/name", async function (req, res, next) {
 
     var gotname = req.body;
     console.log(gotname.name)
-        
+    //babu    
     // query gotnamename to your database
     //res as your database 
 
