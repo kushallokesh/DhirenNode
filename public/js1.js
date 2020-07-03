@@ -15,7 +15,7 @@ function getname() {
     sendname(text)
 }
 
-function sendname(ref) {
+async function sendname(ref) {
 
 
     var data = {"name": ref,"Date":"today" };
@@ -33,9 +33,12 @@ function sendname(ref) {
 
         };
 
-        const response =  fetch(route, options);
-        //return resdata = await response.json();
+        const response =  await fetch(route, options);
+        var resdata = await response.json();
+        console.log(resdata)
 
+
+    document.getElementById("value").value = resdata.result;
     
 
 }

@@ -29,6 +29,11 @@ app.post("/name", async function (req, res, next) {
 
     var gotname = req.body;
     console.log(gotname.name)
+    var gotname2 = gotname.name+"suresh"
+    res.send (
+        {"result": gotname2}  
+        )
+        console.log(gotname.name)
     //babu //   
     // query gotnamename to your database
     //res as your database 
