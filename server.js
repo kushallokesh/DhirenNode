@@ -1,5 +1,6 @@
 'use strict';
 var http = require('http');
+var mysql      = require('mysql');
 var port = process.env.PORT || 1337;
 var express = require('express');
 var app = express();
@@ -25,10 +26,65 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+function mysqlget(query) {
+    return new Promise(function (resolve, reject) {
+
+        var connection = mysql.createConnection({
+            host: '127.0.0.1',
+            user: 'root',
+            password: 'Pramodh718',
+            database: 'Test'
+        });
+
+
+        connection.query(query, function (error, results) {
+
+            if (error) throw error
+
+            console.log(results);
+            connection.end();
+            resolve(results);
+
+        });
+
+
+    });
+}
+
+
+app.get("/slots", async function (req, res) {
+
+    var object = req.body;
+    //  console.log(data)
+    var query = "SELECT * FROM Names "
+
+    var Slots = await mysqlget(query)
+
+    console.log(Slots)
+    res.send(Slots);
+});
+
+
+app.post("/putname", async function (req, res) {
+
+    var object = req.body;
+    console.log(object)
+    
+    var query = "INSERT INTO Names (Id,Phone_Number,Name) VALUES('" + object.Id + "','" + object.phone + "','" + object.name + "')"
+ 
+    var database = await mysqlget(query)
+
+    console.log(database);
+    res.send({ "Status": "Delete" });
+
+});
+/*
 app.post("/name", async function (req, res, next) {
 
     var gotname = req.body;
-    console.log(gotname.name)
+    console.log(gotname[0].Car)
+    //var gotname2 =
     var gotname2 = gotname.name+"suresh"
     res.send (
         {"result": gotname2}  
@@ -39,6 +95,25 @@ app.post("/name", async function (req, res, next) {
     //res as your database 
 
 });
+app.post("/database", async function (req, res, next) {
+
+    var gotname = req.body;
+    console.log(gotname[0].Car)
+    //var gotname2 =
+    var gotname2 = gotname.name+"suresh"
+    res.send (
+        {"result": gotname2}  
+        )
+        console.log(gotname.name)
+
+        */
+    //babu //   
+    // query gotnamename to your database
+    //res as your database 
+
+
+
+
 
 http.createServer(app).listen(port, function () {
     console.log('Express server listening on port ' + port);
